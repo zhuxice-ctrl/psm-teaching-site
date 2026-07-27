@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-chooser">
+    <h1>🎓 PSM AI训练营</h1>
+    <p class="subtitle">探索AI的奇妙世界</p>
+    <div class="choice-cards">
+        <a href="{{ url_for('auth.login_teacher') }}" class="card card-teacher">
+            <div class="card-icon">👩‍🏫</div>
+            <h2>老师</h2>
+            <p>管理班级与作品</p>
+        </a>
+        <a href="{{ url_for('auth.login_student') }}" class="card card-student">
+            <div class="card-icon">👨‍🎓</div>
+            <h2>学生</h2>
+            <p>开始AI探索之旅</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

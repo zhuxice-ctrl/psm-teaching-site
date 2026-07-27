@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}L10 作品集{% endblock %}
+{% block content %}
+<div class="showcase-page">
+    <h1>🏆 L10 作品集</h1>
+    <p>同学们的优秀作品在这里汇聚</p>
+    {% if items %}
+    <div class="gallery-grid">
+        {% for item in items %}
+        <div class="gallery-card featured">
+            {% if item.image_path %}
+            <img src="{{ url_for('static', filename=item.image_path) }}" alt="{{ item.display_name }}">
+            {% endif %}
+            <h3>{{ item.display_name or '未命名作品' }}</h3>
+            {% if item.content %}
+            <p class="gallery-text">{{ item.content[:300] }}</p>
+            {% endif %}
+            <div class="gallery-meta">
+                <span>{{ item.student_display }}</span>
+                <span class="work-type">{{ item.work_type }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty">作品集还在等待优秀作品，加油！</p>
+    {% endif %}
+</div>
+{% endblock %}

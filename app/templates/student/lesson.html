@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% block title %}{{ content.title }}{% endblock %}
+{% block content %}
+<div class="lesson-page">
+    <h1>{{ content.title }}</h1>
+    <p class="lesson-desc">{{ content.desc }}</p>
+
+    <div class="quota-bar">
+        <span>文字额度: {{ quota.text_used }}/{{ quota.text_limit }}</span>
+        <span>图片额度: {{ quota.image_used }}/{{ quota.image_limit }}</span>
+    </div>
+
+    <div class="activities">
+        {% for act in content.activities %}
+        <div class="activity-card" data-type="{{ act.type }}">
+            <h3>{{ act.name }}</h3>
+            <p>{{ act.desc }}</p>
+
+            {% if act.type == 'agnes_text' %}
+            <div class="ai-interaction" id="text-{{ loop.index }}">
+                <textarea class="ai-prompt" id="prompt-text-{{ loop.index }}" placeholder="输入你想问AI的问题..." rows="3"></textarea>
+                <button class="btn btn-primary" onclick="askText({{ loop.index }})">问AI</button>
+                <div class="ai-result" id="result-text-{{ loop.index }}"></div>
+            </div>
+            {% elif act.type == 'agnes_image' %}
+            <div class="ai-interaction" id="image-{{ loop.index }}">
+                <textarea class="ai-prompt" id="prompt-image-{{ loop.index }}" placeholder="描述你想让AI画的画面..." rows="2"></textarea>
+                <div class="image-actions">
+                    <button class="btn btn-primary" onclick="askImage({{ loop.index }})">让AI画</button>
+                </div>
+                <div class="ai-result" id="result-image-{{ loop.index }}"></div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <section class="submit-section">
+        <h2>提交我的作品</h2>
+        <form method="POST" action="{{ url_for('student.submit_work', lesson_id=lesson_id) }}" enctype="multipart/form-data">
+            <input type="hidden" name="work_type" value="mixed">
+            <label>作品名称
+                <input type="text" name="display_name" placeholder="给作品起个名字">
+            </label>
+            <label>文字内容
+                <textarea name="content" rows="4" placeholder="写下你的想法、故事、答案..."></textarea>
+            </label>
+            <label>上传图片
+                <input type="file" name="image" accept="image/*">
+            </label>
+            <button type="submit" class="btn btn-primary">提交作品</button>
+        </form>
+    </section>
+
+    <div class="lesson-nav">
+        <a href="{{ url_for('student.external_links', lesson_id=lesson_id) }}" class="btn">L7-L9 编程世界 →</a>
+        <a href="{{ url_for('student.l10_showcase', class_id=class_id) }}" class="btn">L10 作品集 →</a>
+    </div>
+</div>
+
+<script>
+const textLocks = new Set();
+const imageLocks = new Set();
+
+function escapeHtml(text) {
+    return String(text || '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+function stripMarkdown(text) {
+    return String(text || '')
+        .replace(/```[\s\S]*?```/g, m => m.replace(/```/g, ''))
+        .replace(/`([^`]+)`/g, '$1')
+        .replace(/\*\*([^*]+)\*\*/g, '$1')
+        .replace(/__([^_]+)__/g, '$1')
+        .replace(/\*([^*]+)\*/g, '$1')
+        .replace(/^\s{0,3}#{1,6}\s+/gm, '')
+        .replace(/^\s*[-*+]\s+/gm, '• ')
+        .replace(/^\s*\d+\.\s+/gm, '• ')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+}
+
+function friendlyText(text) {
+    return escapeHtml(stripMarkdown(text)).replace(/\n/g, '<br>');
+}
+
+async function askText(idx) {
+    const prompt = document.getElementById('prompt-text-' + idx).value.trim();
+    if (!prompt || textLocks.has(idx)) return;
+    textLocks.add(idx);
+    const resultDiv = document.getElementById('result-text-' + idx);
+    const btn = document.querySelector(`#text-${idx} button`);
+    btn.disabled = true;
+    btn.textContent = '思考中...';
+    let pct = 12;
+    resultDiv.setAttribute('aria-live', 'polite');
+    resultDiv.innerHTML = '<div class="ai-progress"><div class="ai-progress-bar" style="width:12%"></div></div><div class="ai-progress-text">正在提交问题...</div>';
+    const timer = setInterval(() => {
+        pct = Math.min(92, pct + Math.ceil((100 - pct) * 0.12));
+        const bar = resultDiv.querySelector('.ai-progress-bar');
+        const text = resultDiv.querySelector('.ai-progress-text');
+        if (bar) bar.style.width = pct + '%';
+        if (text) text.textContent = pct < 45 ? 'AI正在理解问题...' : (pct < 75 ? 'AI正在组织答案...' : '快完成了，正在返回结果...');
+    }, 900);
+    try {
+        const resp = await fetch(window.PSM.API_PREFIX + 'generate/text', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({prompt})
+        });
+        const data = await resp.json();
+        clearInterval(timer);
+        if (data.error && !data.content) {
+            resultDiv.innerHTML = '<span class="error">' + escapeHtml(data.error) + '</span>';
+        } else {
+            resultDiv.innerHTML = '<div class="ai-progress"><div class="ai-progress-bar" style="width:100%"></div></div><div class="ai-progress-text">' + (data.source === 'fallback' ? 'AI暂不可用，已给出备用提示。' : '回答完成。') + '</div><div class="ai-answer"><strong>' + (data.source === 'fallback' ? '💡 ' : '🤖 ') + '</strong>' + friendlyText(data.content || '') + '</div>';
+        }
+    } catch(e) {
+        clearInterval(timer);
+        resultDiv.innerHTML = '<span class="error">网络错误，请重试</span>';
+    } finally {
+        textLocks.delete(idx);
+        btn.disabled = false;
+        btn.textContent = '问AI';
+    }
+}
+
+async function askImage(idx) {
+    const prompt = document.getElementById('prompt-image-' + idx).value.trim();
+    if (!prompt || imageLocks.has(idx)) return;
+    imageLocks.add(idx);
+    const resultDiv = document.getElementById('result-image-' + idx);
+    const btn = document.querySelector(`#image-${idx} button`);
+    btn.disabled = true;
+    btn.textContent = '生成中...';
+    let pct = 8;
+    resultDiv.innerHTML = '<div class="ai-progress"><div class="ai-progress-bar" style="width:8%"></div></div><div class="ai-progress-text">正在排队生成，请不要重复点击...</div>';
+    const timer = setInterval(() => {
+        pct = Math.min(95, pct + Math.ceil((100 - pct) * 0.08));
+        const bar = resultDiv.querySelector('.ai-progress-bar');
+        const text = resultDiv.querySelector('.ai-progress-text');
+        if (bar) bar.style.width = pct + '%';
+        if (text) text.textContent = pct < 40 ? '正在理解你的画面...' : (pct < 75 ? '正在画图，请稍等...' : '快完成了，正在保存到作品目录...');
+    }, 1200);
+    try {
+        const resp = await fetch(window.PSM.API_PREFIX + 'generate/image', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({prompt})
+        });
+        let data = await resp.json();
+        if (!resp.ok || data.error) throw new Error(data.error || '生图任务创建失败');
+        const jobId = data.job_id;
+        if (jobId && data.status !== 'done') {
+            for (let i = 0; i < 90; i++) {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                const statusResp = await fetch(window.PSM.API_PREFIX + 'generate/image/status/' + encodeURIComponent(jobId));
+                if (!statusResp.ok) {
+                    let errorData = {};
+                    try { errorData = await statusResp.json(); } catch (_) {}
+                    throw new Error(errorData.error || '生图任务已中断，请重新提交');
+                }
+                data = await statusResp.json();
+                const bar = resultDiv.querySelector('.ai-progress-bar');
+                const text = resultDiv.querySelector('.ai-progress-text');
+                if (bar && data.progress) bar.style.width = data.progress + '%';
+                if (text && data.message) text.textContent = data.message + (data.queue_size ? '（前面还有 ' + data.queue_size + ' 个任务）' : '');
+                if (data.status === 'done' || data.status === 'error') break;
+            }
+            if (data.status !== 'done' && data.status !== 'error') {
+                throw new Error('生图等待超时，请稍后重试');
+            }
+        } else if (!jobId && data.status !== 'done') {
+            throw new Error('未取得生图任务编号，请重新提交');
+        }
+        clearInterval(timer);
+        if (data.image_url) {
+            resultDiv.innerHTML = '<div class="ai-progress"><div class="ai-progress-bar" style="width:100%"></div></div><div class="ai-progress-text">' + escapeHtml(data.message || '已生成，并保存到你的作品目录。') + '</div><img src="' + escapeHtml(data.image_url) + '" style="max-width:100%;border-radius:8px;margin-top:10px"><div class="ai-progress-text">来源：' + escapeHtml(data.source || 'ai') + '</div>';
+        } else if (data.content) {
+            resultDiv.innerHTML = '<div class="ai-answer">' + friendlyText(data.content) + '</div>';
+        } else if (data.error || data.message) {
+            resultDiv.innerHTML = '<span class="error">' + escapeHtml(data.error || data.message) + '</span>';
+        }
+    } catch(e) {
+        clearInterval(timer);
+        resultDiv.innerHTML = '<span class="error">' + escapeHtml(e.message || '网络错误，请重试') + '</span>';
+    } finally {
+        imageLocks.delete(idx);
+        btn.disabled = false;
+        btn.textContent = '让AI画';
+    }
+}
+</script>
+{% endblock %}

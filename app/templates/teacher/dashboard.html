@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}教师后台{% endblock %}
+{% block content %}
+<div class="teacher-dash">
+    <h1>教师后台</h1>
+    <div class="create-class">
+        <h2>创建新班级</h2>
+        <form method="POST" action="{{ url_for('teacher.create_class') }}">
+            <div class="form-row">
+                <input type="text" name="name" placeholder="班级名称" required>
+                <input type="text" name="semester" placeholder="学期（如2026春季）">
+                <button type="submit" class="btn btn-primary">创建</button>
+            </div>
+        </form>
+    </div>
+    <div class="class-list">
+        <h2>我的班级</h2>
+        {% if classes %}
+        <table>
+            <thead>
+                <tr><th>班级名称</th><th>学期</th><th>班级码</th><th>操作</th></tr>
+            </thead>
+            <tbody>
+                {% for cls in classes %}
+                <tr>
+                    <td>{{ cls.name }}</td>
+                    <td>{{ cls.semester }}</td>
+                    <td><code>{{ cls.class_code }}</code></td>
+                    <td>
+                        <a href="{{ url_for('teacher.class_detail', class_id=cls.id) }}" class="btn btn-sm">管理</a>
+                        <a href="{{ url_for('teacher.submissions', class_id=cls.id) }}" class="btn btn-sm">审核作品</a>
+                        <a href="{{ url_for('teacher.gallery', class_id=cls.id) }}" class="btn btn-sm">展示墙</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="empty">还没有班级，创建一个吧</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

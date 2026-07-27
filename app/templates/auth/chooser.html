@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}登录 - PSM AI训练营{% endblock %}
+{% block content %}
+<div class="auth-chooser">
+    <h1>欢迎来到 PSM AI训练营</h1>
+    <p class="subtitle">选择你的身份</p>
+    <div class="choice-cards">
+        <a href="{{ url_for('auth.login_teacher') }}" class="card card-teacher">
+            <div class="card-icon">👩‍🏫</div>
+            <h2>老师登录</h2>
+            <p>管理班级、审核作品</p>
+        </a>
+        <a href="{{ url_for('auth.login_student') }}" class="card card-student">
+            <div class="card-icon">👨‍🎓</div>
+            <h2>学生进入</h2>
+            <p>输入姓名，开始学习</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

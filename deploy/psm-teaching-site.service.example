@@ -1,0 +1,14 @@
+[Unit]
+Description=PSM Teaching Site
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/psm-teaching-site
+Environment=PATH=/opt/psm-teaching-site/.venv/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/opt/psm-teaching-site/.venv/bin/python run.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

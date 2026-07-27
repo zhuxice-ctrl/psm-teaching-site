@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PSM AI训练营{% endblock %}</title>
+    <script src="{{ url_for('static', filename='vendor/htmx/htmx.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+    window.PSM = window.PSM || {};
+    window.PSM.STATIC_PREFIX = "{{ url_for('static', filename='') }}";
+    window.PSM.API_PREFIX = "{{ url_for('index') }}api/";
+    </script>
+</head>
+<body>
+    <nav class="top-nav">
+        <a href="{{ url_for('index') }}" class="logo">PSM AI训练营</a>
+        <div class="nav-links">
+            {% if current_user.is_authenticated %}
+                {% if current_user.is_teacher %}
+                    <a href="{{ url_for('teacher.dashboard') }}">教师后台</a>
+                {% else %}
+                    <a href="{{ url_for('student.lesson', lesson_id=current_user.lesson_id) }}">当前课程</a>
+                    <a href="{{ url_for('student.gallery', class_id=current_user.class_id) }}">展示墙</a>
+                {% endif %}
+                <a href="{{ url_for('auth.logout') }}">退出</a>
+            {% else %}
+                <a href="{{ url_for('auth.login_chooser') }}">登录</a>
+            {% endif %}
+        </div>
+    </nav>
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for cat, msg in messages %}
+            <div class="flash flash-{{ cat }}">{{ msg }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+        <p>PSM AI训练营 · psm.steam.fun</p>
+    </footer>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

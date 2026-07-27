@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}L7-L9 编程世界{% endblock %}
+{% block content %}
+<div class="external-page">
+    <h1>💻 L7-L9 编程世界</h1>
+    <p>编程和运行环境请访问 PSM 平台：</p>
+    <div class="external-links">
+        <a href="https://psm.steam.fun" target="_blank" class="btn btn-primary btn-lg">进入 psm.steam.fun →</a>
+    </div>
+    <section class="screenshot-upload">
+        <h2>📸 上传编程截图作业</h2>
+        <form method="POST" action="{{ url_for('student.submit_work', lesson_id=lesson_id) }}" enctype="multipart/form-data">
+            <input type="hidden" name="work_type" value="screenshot">
+            <label>作品说明
+                <textarea name="content" rows="2" placeholder="简单描述你做了什么"></textarea>
+            </label>
+            <label>截图
+                <input type="file" name="image" accept="image/png,image/jpeg" required>
+            </label>
+            <button type="submit" class="btn btn-primary">上传截图</button>
+        </form>
+    </section>
+</div>
+{% endblock %}

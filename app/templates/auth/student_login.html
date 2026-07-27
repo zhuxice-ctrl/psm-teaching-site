@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}学生进入{% endblock %}
+{% block content %}
+<div class="auth-form">
+    <h1>学生进入</h1>
+    <form method="POST">
+        <label>你的姓名
+            <input type="text" name="name" required placeholder="输入老师登记的名字">
+        </label>
+        {% if need_phone %}
+        <label>手机尾号4位
+            <input type="text" name="phone_tail" maxlength="4" pattern="\d{4}" placeholder="有同名同学时填写">
+        </label>
+        {% else %}
+        <label>手机尾号4位（如有同名）
+            <input type="text" name="phone_tail" maxlength="4" pattern="\d{4}" placeholder="选填">
+        </label>
+        {% endif %}
+        <label>班级码
+            <input type="text" name="class_code" value="{{ class_code }}" required placeholder="老师给的6位班级码">
+        </label>
+        <button type="submit" class="btn btn-primary">进入课堂</button>
+    </form>
+    <a href="{{ url_for('auth.login_chooser') }}" class="back-link">← 返回</a>
+</div>
+{% endblock %}

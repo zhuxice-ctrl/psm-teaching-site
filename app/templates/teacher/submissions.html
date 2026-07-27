@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}作品审核 - {{ cls.name }}{% endblock %}
+{% block content %}
+<div class="submissions-page">
+    <h1>作品审核 · {{ cls.name }}</h1>
+    <div class="filter-bar">
+        <span class="filter-label">状态:</span>
+        <a href="?status=all&lesson_id={{ lesson_filter }}" class="btn btn-sm {{ 'active' if status_filter=='all' }}">全部</a>
+        <a href="?status=pending&lesson_id={{ lesson_filter }}" class="btn btn-sm {{ 'active' if status_filter=='pending' }}">待审核</a>
+        <a href="?status=approved&lesson_id={{ lesson_filter }}" class="btn btn-sm {{ 'active' if status_filter=='approved' }}">已通过</a>
+        <a href="?status=rejected&lesson_id={{ lesson_filter }}" class="btn btn-sm {{ 'active' if status_filter=='rejected' }}">已驳回</a>
+
+        <span class="filter-label" style="margin-left:16px">课次:</span>
+        <select id="lesson-filter" onchange="filterByLesson(this.value)" class="btn btn-sm">
+            <option value="all" {{ 'selected' if lesson_filter=='all' }}>全部课次</option>
+            {% for l in lessons %}
+            <option value="{{ l.id }}" {{ 'selected' if lesson_filter == l.id|string }}>{{ l.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    {% if submissions %}
+    <div class="submission-list">
+        {% for s in submissions %}
+        <div class="submission-card status-{{ s.status }}">
+            <div class="sub-header">
+                <span class="student">{{ s.student_name }}</span>
+                <span class="lesson-badge">{{ s.lesson_name or ('课次#' ~ s.lesson_id) }}</span>
+                <span class="status badge-{{ s.status }}">{{ s.status }}</span>
+                <span class="time">{{ s.created_at }}</span>
+            </div>
+            {% if s.content %}
+            <div class="sub-content">{{ s.content }}</div>
+            {% endif %}
+            {% if s.image_path %}
+            <div class="sub-image">
+                <img src="{{ url_for('static', filename=s.image_path) }}" alt="作品图片" style="max-width:300px">
+                <div class="image-source">路径: {{ s.image_path }}</div>
+            </div>
+            {% endif %}
+            {% if s.status == 'pending' %}
+            <form method="POST" action="{{ url_for('teacher.review_submission', sub_id=s.id) }}" class="review-form">
+                <input type="hidden" name="class_id" value="{{ cls.id }}">
+                <input type="text" name="comment" placeholder="评语（选填）">
+                <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">通过</button>
+                <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">驳回</button>
+            </form>
+            {% endif %}
+            {% if s.teacher_comment %}
+            <p class="comment">老师评语: {{ s.teacher_comment }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty">暂无作品</p>
+    {% endif %}
+</div>
+<script>
+function filterByLesson(val) {
+    const url = new URL(window.location);
+    url.searchParams.set('lesson_id', val);
+    window.location = url;
+}
+</script>
+{% endblock %}
