@@ -80,7 +80,7 @@ python3 -m http.server 8000
 
 - 纯 HTML / CSS / JS（无构建步骤）
 - CSS 变量驱动主题切换（`body[data-theme="..."]`）
-- Google Fonts 走妙搭自托管镜像 `miaoda.feishu.cn/fonts`
+- Google Fonts 自托管（`Fraunces` / `Nunito` / `Caveat` / `JetBrains Mono`）
 - 资产走 `assets/images/` 相对路径，6 张预生成配图
 
 ## 文件

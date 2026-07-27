@@ -1177,6 +1177,8 @@
     if (!sub) return;
     const comment = card.querySelector('.comment').value.trim();
     sub.comment = comment;
+    // 先禁用本卡操作按钮，防止印章动画期间重复点击
+    card.querySelectorAll('[data-sub-act]').forEach(b => { b.disabled = true; });
     if (btn.dataset.subAct === 'approve') {
       sub.status = 'approved';
       // 进入 gallery
@@ -1187,7 +1189,6 @@
         content: sub.content, created_at: Date.now()
       });
       showFlash('success', '已通过，作品进入展示墙');
-      // 砸下「已通过」印章（即使后续 re-render 也不影响，因为重新渲染会替换这张卡）
       FX.dropStamp(card, 'approve');
     } else if (btn.dataset.subAct === 'reject') {
       sub.status = 'rejected';
@@ -1195,7 +1196,9 @@
       FX.dropStamp(card, 'reject');
     }
     saveDB(DB);
-    renderSubmissions();
+    // 延迟重渲染：同步 innerHTML 重绘会把刚砸下的印章在同一帧抹掉，
+    // 等印章下落动画（0.55s）播完并稍作停留后再刷新列表。
+    setTimeout(() => renderSubmissions(), 1500);
   }
 
   /* ============================================================
