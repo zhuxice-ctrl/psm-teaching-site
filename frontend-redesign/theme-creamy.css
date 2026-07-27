@@ -1,0 +1,921 @@
+/* ============================================================
+   PSM AI 训练营 · 主题二：奶油乐园 (Creamy Playful)
+   奶油纸纹 · 大圆角贴纸 · 手写点缀 · 暖色调
+   ============================================================ */
+
+body[data-theme="creamy"] {
+  --bg: #fff7e6;
+  --bg-2: #ffeed1;
+  --bg-3: #ffe2b0;
+  --surface: #fffaf0;
+  --surface-2: #fff3d6;
+  --surface-3: #ffe8b3;
+  --border: #f0d9a8;
+  --border-strong: #ff6b6b;
+  --text: #3d2914;
+  --text-2: #8b6f47;
+  --text-3: #b89876;
+  --primary: #ff6b6b;
+  --primary-2: #4ecdc4;
+  --accent: #ffd166;
+  --success: #7cb342;
+  --danger: #e76f51;
+  --warning: #f4a261;
+
+  --radius: 24px;
+  --radius-lg: 32px;
+  --radius-sm: 16px;
+
+  --shadow-sm: 0 3px 0 #f0c98a;
+  --shadow: 0 6px 0 #e8b96a, 0 12px 28px rgba(212, 163, 90, 0.22);
+  --shadow-lg: 0 8px 0 #d9a050, 0 18px 40px rgba(212, 163, 90, 0.32);
+  --glow: 0 0 0 transparent;
+
+  --font-display: "Fraunces", "Caveat", "Comic Sans MS", "Noto Sans SC", serif;
+  --font-body: "Nunito", -apple-system, "Segoe UI", "Noto Sans SC", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-hand: "Caveat", "Brush Script MT", cursive;
+
+  --bg-image:
+    radial-gradient(circle at 18px 18px, rgba(255, 209, 102, 0.18) 2px, transparent 3px),
+    radial-gradient(circle at 58px 48px, rgba(255, 107, 107, 0.08) 2px, transparent 3px),
+    linear-gradient(180deg, #fff7e6 0%, #ffeed1 100%);
+  --bg-size: 80px 80px, 80px 80px, auto;
+}
+
+body[data-theme="creamy"] {
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 500;
+  background-color: var(--bg);
+  background-image: var(--bg-image);
+  background-size: var(--bg-size);
+  background-attachment: fixed;
+}
+
+body[data-theme="creamy"]::before {
+  content: "";
+  position: fixed;
+  top: -120px;
+  right: -120px;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0.35;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== top nav ===== */
+body[data-theme="creamy"] .topnav {
+  position: sticky;
+  top: 12px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  margin: 12px 12px 0;
+  background: var(--surface);
+  border: 3px solid var(--text);
+  border-radius: 28px;
+  box-shadow: 0 5px 0 var(--text);
+}
+body[data-theme="creamy"] .topnav .logo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+body[data-theme="creamy"] .topnav .logo::before {
+  content: "";
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  border: 3px solid var(--text);
+  flex-shrink: 0;
+}
+body[data-theme="creamy"] .topnav .nav-links { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+body[data-theme="creamy"] .topnav .nav-links a {
+  color: var(--text);
+  font: 700 14px var(--font-body);
+  padding: 7px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.15s;
+}
+body[data-theme="creamy"] .topnav .nav-links a:hover { background: var(--surface-2); transform: translateY(-1px); }
+body[data-theme="creamy"] .topnav .nav-links a.active { background: var(--primary); color: #fff; }
+
+/* （旧 .theme-switch 顶栏主题切换器样式已随选择页主题切换块移除） */
+
+/* ===== container ===== */
+body[data-theme="creamy"] .container { max-width: 1000px; margin: 0 auto; padding: 28px 24px 80px; position: relative; z-index: 1; }
+
+/* ===== chooser ===== */
+body[data-theme="creamy"] .view-chooser { text-align: center; padding: 48px 0 20px; }
+body[data-theme="creamy"] .view-chooser h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(40px, 7vw, 68px);
+  letter-spacing: -0.02em;
+  line-height: 1.0;
+  margin: 0 0 10px;
+  color: var(--text);
+}
+body[data-theme="creamy"] .view-chooser h1 .hand {
+  font-family: var(--font-hand);
+  color: var(--primary);
+  display: inline-block;
+  transform: rotate(-3deg);
+  font-weight: 400;
+}
+body[data-theme="creamy"] .view-chooser .subtitle { color: var(--text-2); font-size: 18px; margin: 0 0 40px; font-weight: 600; }
+body[data-theme="creamy"] .choice-cards { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; }
+body[data-theme="creamy"] .choice-card {
+  position: relative;
+  width: 270px;
+  padding: 36px 28px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 3px solid var(--text);
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 0 var(--text);
+}
+body[data-theme="creamy"] .choice-card:nth-child(1) { transform: rotate(-1.5deg); }
+body[data-theme="creamy"] .choice-card:nth-child(2) { transform: rotate(1.5deg); }
+body[data-theme="creamy"] .choice-card:hover { transform: translateY(-6px) rotate(0); box-shadow: 0 12px 0 var(--text); }
+body[data-theme="creamy"] .choice-card .icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--text);
+}
+body[data-theme="creamy"] .choice-card .icon svg { width: 32px; height: 32px; color: var(--text); }
+body[data-theme="creamy"] .choice-card h2 { font-family: var(--font-display); font-weight: 900; font-size: 24px; margin: 0 0 6px; }
+body[data-theme="creamy"] .choice-card p { color: var(--text-2); font-size: 14px; margin: 0; font-weight: 600; }
+
+/* （旧 .theme-explore / .theme-card 样式已随选择页主题切换块移除；保留的 cosmic/pixel 主题 CSS 不受影响） */
+
+/* ===== auth forms ===== */
+body[data-theme="creamy"] .view-auth { max-width: 440px; margin: 48px auto; }
+body[data-theme="creamy"] .view-auth h1 { font-family: var(--font-display); font-weight: 900; font-size: 36px; margin: 0 0 16px; }
+body[data-theme="creamy"] .view-auth .form-card {
+  background: var(--surface);
+  border: 3px solid var(--text);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: 0 8px 0 var(--text);
+}
+body[data-theme="creamy"] .form-group { margin-bottom: 18px; }
+body[data-theme="creamy"] .form-group label {
+  display: block;
+  font: 700 13px var(--font-body);
+  color: var(--text);
+  margin-bottom: 6px;
+}
+body[data-theme="creamy"] .form-group label .hint { color: var(--text-2); font-weight: 600; font-size: 12px; margin-left: 6px; }
+body[data-theme="creamy"] .form-group input,
+body[data-theme="creamy"] .form-group textarea,
+body[data-theme="creamy"] .form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  font: 600 14px var(--font-body);
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--text);
+  border-radius: var(--radius-sm);
+  transition: transform 0.1s, box-shadow 0.15s;
+}
+body[data-theme="creamy"] .form-group input:focus,
+body[data-theme="creamy"] .form-group textarea:focus,
+body[data-theme="creamy"] .form-group select:focus {
+  outline: 0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 var(--primary);
+}
+body[data-theme="creamy"] .form-group textarea { resize: vertical; min-height: 72px; }
+body[data-theme="creamy"] .form-group input[type="file"] { padding: 10px; }
+body[data-theme="creamy"] .form-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: stretch; }
+body[data-theme="creamy"] .form-row > * { flex: 1; min-width: 0; }
+
+/* buttons */
+body[data-theme="creamy"] .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 20px;
+  font: 800 14px var(--font-body);
+  color: var(--text);
+  background: var(--surface);
+  border: 2.5px solid var(--text);
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.12s, box-shadow 0.12s;
+  box-shadow: 0 3px 0 var(--text);
+  white-space: nowrap;
+}
+body[data-theme="creamy"] .btn:hover { transform: translateY(-1px); box-shadow: 0 5px 0 var(--text); }
+body[data-theme="creamy"] .btn:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--text); }
+body[data-theme="creamy"] .btn.primary { background: var(--primary); color: #fff; }
+body[data-theme="creamy"] .btn.primary:hover { background: #ff5252; }
+body[data-theme="creamy"] .btn.success { background: var(--success); color: #fff; }
+body[data-theme="creamy"] .btn.danger { background: var(--danger); color: #fff; }
+body[data-theme="creamy"] .btn.ghost { background: transparent; box-shadow: none; }
+body[data-theme="creamy"] .btn.ghost:hover { background: var(--surface-2); box-shadow: 0 3px 0 var(--text); }
+body[data-theme="creamy"] .btn.sm { padding: 6px 12px; font-size: 12px; box-shadow: 0 2px 0 var(--text); }
+body[data-theme="creamy"] .btn.lg { padding: 14px 28px; font-size: 16px; }
+body[data-theme="creamy"] .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: 0 3px 0 var(--text); }
+body[data-theme="creamy"] .btn.block { width: 100%; }
+body[data-theme="creamy"] .back-link { display: inline-block; margin-top: 16px; color: var(--text-2); font-size: 13px; text-decoration: none; font-weight: 700; }
+body[data-theme="creamy"] .back-link:hover { color: var(--primary); }
+
+/* flash */
+body[data-theme="creamy"] .flash {
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 2.5px solid var(--text);
+  background: var(--surface);
+}
+body[data-theme="creamy"] .flash.success { background: #e8f5d8; }
+body[data-theme="creamy"] .flash.error { background: #ffe0d6; }
+body[data-theme="creamy"] .flash.info { background: #d4f1ed; }
+
+/* ===== lesson ===== */
+body[data-theme="creamy"] .view-lesson h1 { font-family: var(--font-display); font-weight: 900; font-size: 40px; margin: 0 0 6px; }
+body[data-theme="creamy"] .view-lesson .lesson-desc { color: var(--text-2); margin: 0 0 20px; font-size: 16px; font-weight: 600; }
+body[data-theme="creamy"] .quota-bar {
+  display: flex;
+  gap: 16px;
+  padding: 14px 22px;
+  background: var(--surface);
+  border: 3px solid var(--text);
+  border-radius: 999px;
+  margin-bottom: 24px;
+  font: 700 14px var(--font-body);
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 0 var(--text);
+}
+body[data-theme="creamy"] .quota-bar .q { display: flex; align-items: center; gap: 8px; }
+body[data-theme="creamy"] .quota-bar .q .num { font-weight: 900; color: var(--primary); font-size: 16px; }
+body[data-theme="creamy"] .quota-bar .q .dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--text); }
+body[data-theme="creamy"] .quota-bar .q.text .dot { background: var(--primary-2); }
+body[data-theme="creamy"] .quota-bar .q.image .dot { background: var(--accent); }
+
+body[data-theme="creamy"] .activities { display: grid; gap: 18px; margin-bottom: 32px; }
+body[data-theme="creamy"] .activity-card {
+  background: var(--surface);
+  border: 3px solid var(--text);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  position: relative;
+  transition: transform 0.15s;
+  box-shadow: 0 5px 0 var(--text);
+}
+body[data-theme="creamy"] .activity-card:hover { transform: translateY(-2px); }
+body[data-theme="creamy"] .activity-card[data-type="agnes_text"] { background: linear-gradient(180deg, #fff 0%, #fff5e0 100%); }
+body[data-theme="creamy"] .activity-card[data-type="agnes_image"] { background: linear-gradient(180deg, #fff 0%, #ffe8d6 100%); }
+body[data-theme="creamy"] .activity-card[data-type="discussion"] { background: linear-gradient(180deg, #fff 0%, #fff8d4 100%); }
+body[data-theme="creamy"] .activity-card[data-type="create"] { background: linear-gradient(180deg, #fff 0%, #d4f1ed 100%); }
+body[data-theme="creamy"] .activity-card .type-tag {
+  position: absolute;
+  top: -12px;
+  left: 18px;
+  padding: 3px 12px;
+  background: var(--text);
+  color: var(--surface);
+  font: 800 10px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 999px;
+}
+body[data-theme="creamy"] .activity-card h3 { font-family: var(--font-display); font-weight: 800; font-size: 22px; margin: 0 0 4px; }
+body[data-theme="creamy"] .activity-card .act-desc { color: var(--text-2); font-size: 14px; margin: 0 0 16px; font-weight: 600; }
+body[data-theme="creamy"] .ai-interaction { margin-top: 12px; }
+body[data-theme="creamy"] .ai-progress {
+  width: 100%;
+  height: 14px;
+  background: var(--surface-2);
+  border: 2px solid var(--text);
+  border-radius: 999px;
+  margin-top: 12px;
+  position: relative;
+}
+body[data-theme="creamy"] .ai-progress-bar {
+  height: 100%;
+  width: 0;
+  background: repeating-linear-gradient(45deg, var(--primary) 0 12px, var(--primary-2) 12px 24px);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+body[data-theme="creamy"] .ai-progress-text { margin-top: 8px; color: var(--text-2); font-size: 13px; font-weight: 600; min-height: 18px; }
+body[data-theme="creamy"] .ai-answer {
+  margin-top: 12px;
+  padding: 16px;
+  background: #d4f1ed;
+  border: 2px dashed var(--text);
+  border-radius: var(--radius);
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 600;
+}
+body[data-theme="creamy"] .ai-answer.fallback { background: #fff8d4; }
+body[data-theme="creamy"] .ai-image-result { margin-top: 12px; }
+body[data-theme="creamy"] .ai-image-result img { max-width: 100%; border-radius: var(--radius); border: 3px solid var(--text); display: block; }
+body[data-theme="creamy"] .ai-image-result .src { display: inline-block; margin-top: 8px; font: 11px var(--font-mono); color: var(--text-2); padding: 3px 8px; background: var(--surface-2); border-radius: 999px; }
+body[data-theme="creamy"] .ai-error { color: var(--danger); font-size: 13px; font-weight: 700; margin-top: 8px; }
+
+body[data-theme="creamy"] .submit-section {
+  background: var(--surface);
+  border: 3px dashed var(--primary);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin: 24px 0;
+}
+body[data-theme="creamy"] .submit-section h2 { font-family: var(--font-display); font-weight: 900; font-size: 22px; margin: 0 0 16px; }
+body[data-theme="creamy"] .lesson-nav { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+
+/* ===== gallery / l10 ===== */
+body[data-theme="creamy"] .view-gallery h1, body[data-theme="creamy"] .view-l10 h1 { font-family: var(--font-display); font-weight: 900; font-size: 36px; margin: 0 0 4px; }
+body[data-theme="creamy"] .view-gallery .subtitle, body[data-theme="creamy"] .view-l10 .subtitle { color: var(--text-2); margin: 0 0 24px; font-weight: 600; }
+body[data-theme="creamy"] .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 22px; }
+body[data-theme="creamy"] .gallery-card {
+  background: var(--surface);
+  border: 3px solid var(--text);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.18s;
+  box-shadow: 0 5px 0 var(--text);
+}
+body[data-theme="creamy"] .gallery-card:hover { transform: translateY(-4px) rotate(-0.5deg); }
+body[data-theme="creamy"] .gallery-card img { width: 100%; height: 180px; object-fit: cover; display: block; border-bottom: 3px solid var(--text); }
+body[data-theme="creamy"] .gallery-card .body { padding: 14px 16px; }
+body[data-theme="creamy"] .gallery-card h3 { font-family: var(--font-display); font-weight: 800; font-size: 18px; margin: 0 0 4px; }
+body[data-theme="creamy"] .gallery-card .text { color: var(--text-2); font-size: 13px; line-height: 1.5; margin: 6px 0; font-weight: 600; }
+body[data-theme="creamy"] .gallery-card .meta { display: flex; justify-content: space-between; align-items: center; font: 12px var(--font-body); color: var(--text-2); margin-top: 10px; font-weight: 700; }
+body[data-theme="creamy"] .gallery-card .meta .wt { background: var(--accent); padding: 2px 10px; border-radius: 999px; border: 1.5px solid var(--text); }
+body[data-theme="creamy"] .gallery-card.featured { border-color: var(--primary); }
+body[data-theme="creamy"] .empty { text-align: center; padding: 60px 20px; color: var(--text-2); font: 600 16px var(--font-hand); font-size: 22px; }
+
+/* ===== l7l8l9 ===== */
+body[data-theme="creamy"] .view-l7l8l9 { text-align: center; padding: 60px 0 20px; }
+body[data-theme="creamy"] .view-l7l8l9 h1 { font-family: var(--font-display); font-weight: 900; font-size: 40px; margin: 0 0 8px; }
+body[data-theme="creamy"] .view-l7l8l9 .subtitle { color: var(--text-2); margin: 0 0 32px; font-weight: 600; }
+body[data-theme="creamy"] .external-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 32px;
+  background: var(--primary-2);
+  color: #fff;
+  border: 3px solid var(--text);
+  border-radius: 999px;
+  text-decoration: none;
+  font: 800 16px var(--font-body);
+  box-shadow: 0 6px 0 var(--text);
+  transition: transform 0.15s;
+}
+body[data-theme="creamy"] .external-card:hover { transform: translateY(-2px); }
+body[data-theme="creamy"] .screenshot-card {
+  max-width: 520px;
+  margin: 40px auto 0;
+  padding: 28px;
+  background: var(--surface);
+  border: 3px solid var(--text);
+  border-radius: var(--radius-lg);
+  text-align: left;
+  box-shadow: 0 6px 0 var(--text);
+}
+body[data-theme="creamy"] .screenshot-card h2 { font-family: var(--font-display); font-weight: 900; font-size: 22px; margin: 0 0 16px; }
+
+/* ===== teacher ===== */
+body[data-theme="creamy"] .view-dashboard h1, body[data-theme="creamy"] .view-class h1, body[data-theme="creamy"] .view-submissions h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 36px;
+  margin: 0 0 16px;
+}
+body[data-theme="creamy"] .view-class .class-info { color: var(--text-2); margin: 0 0 24px; font-size: 14px; font-weight: 600; }
+body[data-theme="creamy"] .view-class .class-info code { background: var(--accent); padding: 3px 12px; border-radius: 8px; color: var(--text); font: 800 13px var(--font-mono); border: 2px solid var(--text); }
+body[data-theme="creamy"] .section { margin: 32px 0; }
+body[data-theme="creamy"] .section h2 { font-family: var(--font-display); font-weight: 800; font-size: 22px; margin: 0 0 14px; padding-bottom: 8px; border-bottom: 3px solid var(--text); display: inline-block; }
+body[data-theme="creamy"] .panel {
+  background: var(--surface);
+  border: 3px solid var(--text);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 5px 0 var(--text);
+}
+body[data-theme="creamy"] table { width: 100%; border-collapse: collapse; font-size: 14px; font-weight: 600; }
+body[data-theme="creamy"] th, body[data-theme="creamy"] td { padding: 12px 14px; text-align: left; border-bottom: 2px dashed var(--border); }
+body[data-theme="creamy"] th { color: var(--text); font: 800 11px var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; }
+body[data-theme="creamy"] td code { background: var(--accent); padding: 2px 8px; border-radius: 6px; font: 800 12px var(--font-mono); color: var(--text); }
+body[data-theme="creamy"] .table-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ===== submissions ===== */
+body[data-theme="creamy"] .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; }
+body[data-theme="creamy"] .filter-bar .label { font: 800 11px var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--text); margin-right: 6px; }
+body[data-theme="creamy"] .submission-card {
+  background: var(--surface);
+  border: 3px solid var(--text);
+  border-left-width: 8px;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 0 var(--text);
+  position: relative;
+  overflow: visible;
+}
+body[data-theme="creamy"] .submission-card.status-pending { border-left-color: var(--warning); }
+body[data-theme="creamy"] .submission-card.status-approved { border-left-color: var(--success); }
+body[data-theme="creamy"] .submission-card.status-rejected { border-left-color: var(--danger); }
+body[data-theme="creamy"] .sub-header { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; font-size: 13px; font-weight: 700; }
+body[data-theme="creamy"] .sub-header .student { font-weight: 900; color: var(--text); font-size: 15px; }
+body[data-theme="creamy"] .badge { padding: 3px 12px; border-radius: 999px; font: 800 10px var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; border: 2px solid var(--text); }
+body[data-theme="creamy"] .badge.lesson { background: var(--surface-2); }
+body[data-theme="creamy"] .badge.status-pending { background: var(--warning); color: #fff; }
+body[data-theme="creamy"] .badge.status-approved { background: var(--success); color: #fff; }
+body[data-theme="creamy"] .badge.status-rejected { background: var(--danger); color: #fff; }
+body[data-theme="creamy"] .sub-content { background: #fff5e0; padding: 14px; border-radius: var(--radius-sm); margin: 10px 0; white-space: pre-wrap; font-size: 14px; font-weight: 600; border: 2px dashed var(--border); }
+body[data-theme="creamy"] .sub-image img { max-width: 280px; border-radius: var(--radius-sm); border: 3px solid var(--text); display: block; margin-top: 8px; }
+body[data-theme="creamy"] .sub-image .path { font: 11px var(--font-mono); color: var(--text-2); margin-top: 4px; font-weight: 700; }
+body[data-theme="creamy"] .review-form { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+body[data-theme="creamy"] .review-form input { flex: 1; min-width: 160px; }
+body[data-theme="creamy"] .comment-line { color: var(--text-2); font-size: 13px; font-weight: 700; margin-top: 10px; padding-top: 10px; border-top: 2px dashed var(--border); }
+
+/* footer */
+body[data-theme="creamy"] .footer {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--text-2);
+  font: 600 13px var(--font-body);
+  margin-top: 60px;
+  position: relative;
+  z-index: 1;
+}
+body[data-theme="creamy"] .footer .hand { font-family: var(--font-hand); color: var(--primary); font-size: 18px; margin: 0 4px; }
+
+/* responsive */
+@media (max-width: 720px) {
+  body[data-theme="creamy"] .topnav { margin: 8px 8px 0; padding: 10px 14px; }
+  body[data-theme="creamy"] .topnav .nav-links a { padding: 5px 9px; font-size: 12px; }
+  body[data-theme="creamy"] .choice-cards { flex-direction: column; align-items: center; }
+  body[data-theme="creamy"] .form-row { flex-direction: column; }
+  body[data-theme="creamy"] .quota-bar { flex-direction: column; gap: 8px; align-items: flex-start; border-radius: var(--radius); }
+  body[data-theme="creamy"] .gallery-grid { grid-template-columns: 1fr; }
+}
+
+
+
+/* ============================================================
+   输入控件渲染补齐（活动卡 textarea / 文件选择器 / 评语 / 课次筛选 / 审核卡头）
+   之前的 .form-group input/textarea/select 只能覆盖 auth + 课程提交表单，
+   活动卡 textarea[data-input]、文件选择按钮、教师评语 textarea.comment、
+   审核页课次筛选 select 与提交卡头/状态徽章都是裸的浏览器默认样式
+   ============================================================ */
+
+/* 活动卡内嵌输入框（问 AI / 让 AI 画） */
+body[data-theme="creamy"] .activity-card textarea[data-input] {
+  display: block;
+  width: 100%;
+  margin: 14px 0 12px;
+  padding: 12px 14px;
+  font: 600 14px var(--font-body);
+  color: var(--text);
+  background: #fffaf0;
+  border: 2.5px solid var(--text);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  min-height: 64px;
+  box-shadow: inset 0 2px 0 rgba(240, 217, 168, 0.6);
+  transition: transform 0.12s, box-shadow 0.15s;
+}
+body[data-theme="creamy"] .activity-card textarea[data-input]::placeholder { color: var(--text-3); }
+body[data-theme="creamy"] .activity-card textarea[data-input]:focus {
+  outline: 0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 var(--primary), inset 0 2px 0 rgba(240, 217, 168, 0.6);
+}
+
+/* 文件上传（form 内 + 活动内） —— 虚线 dropzone + 奶油贴纸按钮 */
+body[data-theme="creamy"] .form-group input[type="file"],
+body[data-theme="creamy"] .activity-card input[type="file"],
+body[data-theme="creamy"] .screenshot-card input[type="file"] {
+  width: 100%;
+  padding: 14px;
+  font: 600 13px var(--font-body);
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 2.5px dashed var(--text-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+body[data-theme="creamy"] .form-group input[type="file"]:hover,
+body[data-theme="creamy"] .activity-card input[type="file"]:hover,
+body[data-theme="creamy"] .screenshot-card input[type="file"]:hover { background: var(--surface); border-color: var(--primary); }
+body[data-theme="creamy"] input[type="file"]::file-selector-button {
+  margin-right: 14px;
+  padding: 9px 18px;
+  font: 800 13px var(--font-body);
+  color: var(--text);
+  background: var(--accent);
+  border: 2.5px solid var(--text);
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--text);
+  transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+}
+body[data-theme="creamy"] input[type="file"]::file-selector-button:hover {
+  background: #ffc34d;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 var(--text);
+}
+body[data-theme="creamy"] input[type="file"]::file-selector-button:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--text); }
+
+/* 教师评语框 + 审核卡底部排版 */
+body[data-theme="creamy"] .submission-foot {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 2.5px dashed var(--border);
+}
+body[data-theme="creamy"] .submission-foot textarea.comment {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  font: 600 14px var(--font-body);
+  color: var(--text);
+  background: #fffaf0;
+  border: 2.5px solid var(--text);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  min-height: 56px;
+  transition: transform 0.12s, box-shadow 0.15s;
+}
+body[data-theme="creamy"] .submission-foot textarea.comment::placeholder { color: var(--text-3); }
+body[data-theme="creamy"] .submission-foot textarea.comment:focus {
+  outline: 0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 var(--primary);
+}
+body[data-theme="creamy"] .submission-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+body[data-theme="creamy"] .submission-actions .muted {
+  color: var(--text-2);
+  font: 700 13px var(--font-body);
+  padding: 6px 0;
+}
+
+/* 审核卡头 + 状态徽章（之前 .sub-header / .badge 是旧类名废规则，补上 .submission-head / .status-badge） */
+body[data-theme="creamy"] .submission-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font: 700 13px var(--font-body);
+  color: var(--text-2);
+}
+body[data-theme="creamy"] .submission-head .student { font: 900 16px var(--font-body); color: var(--text); }
+body[data-theme="creamy"] .submission-head .lesson,
+body[data-theme="creamy"] .submission-head .type,
+body[data-theme="creamy"] .submission-head .source { color: var(--text-2); }
+body[data-theme="creamy"] .status-badge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font: 800 10px var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 2.5px solid var(--text);
+  background: var(--surface-2);
+  color: var(--text);
+  white-space: nowrap;
+}
+body[data-theme="creamy"] .status-badge.status-pending { background: var(--warning); color: #fff; }
+body[data-theme="creamy"] .status-badge.status-approved { background: var(--success); color: #fff; }
+body[data-theme="creamy"] .status-badge.status-rejected { background: var(--danger); color: #fff; }
+body[data-theme="creamy"] .submission-body {
+  background: #fff5e0;
+  border: 2.5px dashed var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-top: 10px;
+}
+body[data-theme="creamy"] .submission-text { white-space: pre-wrap; font: 600 14px var(--font-body); color: var(--text); }
+body[data-theme="creamy"] .submission-image {
+  max-width: 280px;
+  border-radius: var(--radius-sm);
+  border: 3px solid var(--text);
+  display: block;
+  margin-top: 10px;
+}
+
+/* 审核页课次筛选 select —— 它自己挂 .form-group 类，后代选择器 .form-group select 匹配不到；用 .filter-bar select 兜底 */
+body[data-theme="creamy"] .filter-bar { align-items: center; }
+body[data-theme="creamy"] .filter-bar select {
+  margin: 0;
+  padding: 8px 36px 8px 16px;
+  font: 800 13px var(--font-body);
+  color: var(--text);
+  background-color: var(--surface);
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%233d2914' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  border: 2.5px solid var(--text);
+  border-radius: 999px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: transform 0.1s, box-shadow 0.15s;
+}
+body[data-theme="creamy"] .filter-bar select:focus {
+  outline: 0;
+  box-shadow: 0 3px 0 var(--primary);
+}
+body[data-theme="creamy"] .filter-bar select:hover { transform: translateY(-1px); }
+body[data-theme="creamy"] .filter-bar .form-group { margin: 0; }
+
+
+/* ============================================================
+   交互特效（基于奶油乐园设计语言的 8 处动效）
+   1) 入场错位弹跳 (stagger sticker-pop)
+   2) 选择卡 / 作品卡 3D 倾斜 + glare 跟随 (fx-tilt)
+   3) 主按钮磁吸贴纸 (fx-magnetic)
+   4) 主按钮点击星星爆开 (fx-burst)
+   5) 学生提交作品彩屑 (fx-confetti)
+   6) AI 进度条 mascot (fx-progress-mascot)
+   7) 额度用尽抖动 (fx-shake)
+   8) 教师审核通过/驳回印章 (fx-stamp)
+   ============================================================ */
+
+/* 通用：所有 transform 动画都开 GPU 加速 */
+body[data-theme="creamy"] .choice-card,
+body[data-theme="creamy"] .gallery-card,
+body[data-theme="creamy"] .btn.primary {
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+/* ===== 1) 入场错位弹跳（贴纸贴上去的感觉） ===== */
+@keyframes fx-sticker-pop {
+  0%   { opacity: 0; transform: scale(0.86) translateY(16px) rotate(var(--pop-rot, 0deg)); }
+  60%  { opacity: 1; transform: scale(1.04) translateY(-3px) rotate(0); }
+  100% { opacity: 1; transform: scale(1) translateY(0) rotate(0); }
+}
+body[data-theme="creamy"] .fx-stagger > * {
+  animation: fx-sticker-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+body[data-theme="creamy"] .fx-stagger > *:nth-child(1)  { animation-delay: 0.02s; --pop-rot: -2deg; }
+body[data-theme="creamy"] .fx-stagger > *:nth-child(2)  { animation-delay: 0.10s; --pop-rot:  1.5deg; }
+body[data-theme="creamy"] .fx-stagger > *:nth-child(3)  { animation-delay: 0.18s; --pop-rot: -1deg; }
+body[data-theme="creamy"] .fx-stagger > *:nth-child(4)  { animation-delay: 0.26s; --pop-rot:  0.8deg; }
+body[data-theme="creamy"] .fx-stagger > *:nth-child(5)  { animation-delay: 0.32s; --pop-rot: -0.6deg; }
+body[data-theme="creamy"] .fx-stagger > *:nth-child(6)  { animation-delay: 0.38s; --pop-rot:  0.4deg; }
+body[data-theme="creamy"] .fx-stagger > *:nth-child(7)  { animation-delay: 0.42s; }
+body[data-theme="creamy"] .fx-stagger > *:nth-child(8)  { animation-delay: 0.46s; }
+body[data-theme="creamy"] .fx-stagger > *:nth-child(n+9) { animation-delay: 0.50s; }
+
+/* ===== 2) 3D 倾斜 + glare 跟随（仅 hover-capable 设备） ===== */
+body[data-theme="creamy"] .choice-card,
+body[data-theme="creamy"] .gallery-card {
+  position: relative;
+  transform: perspective(900px) rotateX(0) rotateY(0) translateZ(0);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s;
+}
+body[data-theme="creamy"] .choice-card .fx-glare,
+body[data-theme="creamy"] .gallery-card .fx-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle 180px at var(--gx, 50%) var(--gy, 50%),
+              rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 60%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  mix-blend-mode: soft-light;
+  z-index: 1;
+}
+body[data-theme="creamy"] .choice-card:hover .fx-glare,
+body[data-theme="creamy"] .gallery-card:hover .fx-glare { opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  body[data-theme="creamy"] .choice-card:hover { box-shadow: 0 14px 0 var(--text), 0 22px 40px rgba(212, 163, 90, 0.28); }
+  body[data-theme="creamy"] .gallery-card:hover { box-shadow: 0 10px 0 var(--text), 0 18px 36px rgba(212, 163, 90, 0.24); }
+}
+
+/* ===== 3) 主按钮磁吸（鼠标靠近时按钮轻微贴向光标） ===== */
+body[data-theme="creamy"] .btn.primary {
+  position: relative;
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.18s, background 0.18s;
+}
+body[data-theme="creamy"] .btn.primary.fx-magnet {
+  /* 磁吸位移由 JS 通过 --mx/--my 注入 transform */
+  transform: translate(var(--mx, 0px), var(--my, 0px));
+}
+
+/* ===== 4) 星星爆开（点击主按钮时从指针位置喷出） ===== */
+body[data-theme="creamy"] .fx-burst-host {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+body[data-theme="creamy"] .fx-burst-star {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  margin-top: -8px;
+  font: 800 16px/1 var(--font-body);
+  color: var(--primary);
+  text-shadow: 0 1px 0 var(--text);
+  will-change: transform, opacity;
+  animation: fx-burst-fly 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+body[data-theme="creamy"] .fx-burst-star.alt { color: var(--accent); }
+body[data-theme="creamy"] .fx-burst-star.alt2 { color: var(--primary-2); }
+@keyframes fx-burst-fly {
+  0%   { transform: translate(0, 0) scale(0.4) rotate(0); opacity: 0; }
+  18%  { transform: translate(calc(var(--bx, 60px) * 0.25), calc(var(--by, -60px) * 0.25)) scale(1.2) rotate(40deg); opacity: 1; }
+  100% { transform: translate(var(--bx, 60px), var(--by, -60px)) scale(0.6) rotate(var(--br, 220deg)); opacity: 0; }
+}
+
+/* ===== 5) 提交作品彩屑（更密集、更艳） ===== */
+body[data-theme="creamy"] .fx-confetti {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  margin-left: -4.5px;
+  margin-top: -7px;
+  will-change: transform, opacity;
+  animation: fx-confetti-fall 1.3s cubic-bezier(0.2, 0.6, 0.3, 1) forwards;
+}
+@keyframes fx-confetti-fall {
+  0%   { transform: translate(0, 0) rotateZ(0) rotateX(0); opacity: 0; }
+  10%  { opacity: 1; }
+  100% {
+    transform: translate(var(--cx, 0px), var(--cy, 200px)) rotateZ(var(--cz, 360deg)) rotateX(var(--cxr, 240deg));
+    opacity: 0;
+  }
+}
+
+/* ===== 6) AI 进度条 mascot（骑在进度条顶端的小表情） ===== */
+body[data-theme="creamy"] .ai-progress {
+  position: relative;
+}
+body[data-theme="creamy"] .fx-progress-mascot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -55%) scaleX(var(--mx, 1));
+  font-size: 18px;
+  line-height: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 0 rgba(61, 41, 20, 0.25));
+  transition: left 0.5s ease, transform 0.5s ease;
+  z-index: 2;
+}
+body[data-theme="creamy"] .fx-progress-mascot.bump {
+  animation: fx-mascot-bump 0.4s ease;
+}
+@keyframes fx-mascot-bump {
+  0%   { transform: translate(-50%, -55%) scale(1); }
+  30%  { transform: translate(-50%, -75%) scale(1.35); }
+  60%  { transform: translate(-50%, -50%) scale(0.92); }
+  100% { transform: translate(-50%, -55%) scale(1); }
+}
+
+/* ===== 7) 额度用尽抖动 ===== */
+@keyframes fx-shake {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  20% { transform: translateX(-8px) rotate(-0.8deg); }
+  40% { transform: translateX(8px)  rotate(0.8deg); }
+  60% { transform: translateX(-5px) rotate(-0.4deg); }
+  80% { transform: translateX(5px)  rotate(0.4deg); }
+}
+body[data-theme="creamy"] .fx-shake { animation: fx-shake 0.45s ease; }
+
+/* ===== 8) 审核通过 / 驳回印章 ===== */
+body[data-theme="creamy"] .fx-stamp {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  padding: 6px 14px;
+  font: 900 18px var(--font-display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--success);
+  border: 3px solid var(--text);
+  border-radius: 10px;
+  box-shadow: 0 4px 0 var(--text);
+  transform-origin: 70% 70%;
+  pointer-events: none;
+  z-index: 3;
+  animation: fx-stamp-down 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+body[data-theme="creamy"] .fx-stamp.reject {
+  background: var(--danger);
+  animation-name: fx-stamp-down-reject;
+}
+@keyframes fx-stamp-down {
+  0%   { transform: scale(2.4) rotate(-30deg); opacity: 0; }
+  55%  { transform: scale(0.92) rotate(-12deg); opacity: 1; }
+  78%  { transform: scale(1.04) rotate(-8deg); }
+  100% { transform: scale(1) rotate(-10deg); opacity: 1; }
+}
+@keyframes fx-stamp-down-reject {
+  0%   { transform: scale(2.4) rotate(28deg); opacity: 0; }
+  55%  { transform: scale(0.92) rotate(10deg); opacity: 1; }
+  78%  { transform: scale(1.04) rotate(7deg); }
+  100% { transform: scale(1) rotate(9deg); opacity: 1; }
+}
+
+/* 顶栏 logo 抖动 */
+body[data-theme="creamy"] .topnav .logo { transition: transform 0.2s; }
+body[data-theme="creamy"] .topnav .logo:hover { transform: rotate(-6deg) scale(1.05); }
+body[data-theme="creamy"] .topnav .logo:active { transform: rotate(2deg) scale(0.95); }
+
+/* 表单聚焦：标签弹一下 */
+body[data-theme="creamy"] .form-group input:focus + label,
+body[data-theme="creamy"] .form-group textarea:focus + label,
+body[data-theme="creamy"] .form-group input:focus ~ label,
+body[data-theme="creamy"] .form-group textarea:focus ~ label { /* 兜底 */ }
+body[data-theme="creamy"] .form-group input:focus,
+body[data-theme="creamy"] .form-group textarea:focus,
+body[data-theme="creamy"] .form-group select:focus { /* 占位以维持层级 */ }
+body[data-theme="creamy"] .form-group label { display: block; transition: color 0.15s; }
+body[data-theme="creamy"] .form-group input:focus ~ label,
+body[data-theme="creamy"] .form-group textarea:focus ~ label,
+body[data-theme="creamy"] .form-group:has(input:focus) label,
+body[data-theme="creamy"] .form-group:has(textarea:focus) label,
+body[data-theme="creamy"] .form-group:has(select:focus) label {
+  color: var(--primary);
+  animation: fx-label-bump 0.4s ease;
+}
+@keyframes fx-label-bump {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-3px) rotate(-1.2deg); }
+  100% { transform: translateY(0); }
+}
+
+/* 状态徽章弹入（通过/驳回后） */
+body[data-theme="creamy"] .status-badge.just-in { animation: fx-badge-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards; }
+@keyframes fx-badge-pop {
+  0%   { transform: scale(0.4) rotate(-10deg); opacity: 0; }
+  60%  { transform: scale(1.18) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* ============================================================
+   reduced-motion：尊重用户的减少动效设置，全部降级为瞬变
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  body[data-theme="creamy"] .fx-stagger > *,
+  body[data-theme="creamy"] .fx-shake,
+  body[data-theme="creamy"] .fx-stamp,
+  body[data-theme="creamy"] .fx-burst-star,
+  body[data-theme="creamy"] .fx-confetti,
+  body[data-theme="creamy"] .status-badge.just-in,
+  body[data-theme="creamy"] .fx-progress-mascot.bump {
+    animation: none !important;
+  }
+  body[data-theme="creamy"] .choice-card,
+  body[data-theme="creamy"] .gallery-card,
+  body[data-theme="creamy"] .btn.primary {
+    transition: transform 0.01s !important;
+  }
+}

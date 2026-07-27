@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PSM AI训练营</title>
+
+  <!-- Google Fonts via miaoda self-hosted mirror -->
+  <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Bricolage+Grotesque:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@400;700&family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=Nunito:wght@500;600;700;800;900&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="base.css">
+  <!-- 当前唯一主题：奶油乐园。其它主题 CSS 保留在仓库中以便回切，但默认不加载。 -->
+  <link rel="stylesheet" href="theme-creamy.css">
+</head>
+<body data-theme="creamy">
+
+  <nav class="topnav">
+    <a href="#" class="logo" data-link="chooser">PSM AI训练营</a>
+    <div class="nav-links" id="nav-links"></div>
+  </nav>
+
+  <main class="container">
+    <div id="flash"></div>
+
+    <!-- 1. 身份选择（chooser，对应 auth/chooser.html） -->
+    <section class="view view-chooser active" id="v-chooser">
+      <h1>欢迎来到 <span class="hand">PSM</span> AI训练营</h1>
+      <p class="subtitle">选择你的身份 · 演示模式点击直接进入</p>
+      <div class="choice-cards fx-stagger">
+        <a class="choice-card" data-demo-enter="teacher" data-stage="1">
+          <div class="fx-glare" aria-hidden="true"></div>
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
+          </div>
+          <h2>老师进入</h2>
+          <p>免登录 · 点击直接进后台</p>
+        </a>
+        <a class="choice-card" data-demo-enter="student" data-stage="2">
+          <div class="fx-glare" aria-hidden="true"></div>
+          <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2v.3a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2Z"/></svg>
+          </div>
+          <h2>学生进入</h2>
+          <p>免登录 · 点击直接进课堂</p>
+        </a>
+      </div>
+      <p class="demo-login-links">想看看登录页设计？<a href="#" data-link="student-login">学生登录页</a> · <a href="#" data-link="teacher-login">教师登录页</a>（演示模式，无需输入，点按钮即入）</p>
+    </section>
+
+    <!-- 2. 学生登录（auth/student_login.html） -->
+    <section class="view view-auth" id="v-student-login">
+      <h1>学生进入</h1>
+      <div class="form-card">
+        <div class="demo-banner"><span class="hand">演示模式</span><span>登录不连数据库、不做校验——留空也可以，点按钮直接进课堂</span></div>
+        <form id="form-student-login" autocomplete="off" novalidate>
+          <div class="form-group">
+            <label>你的姓名
+              <span class="hint">演示可留空，自动用「小明」</span>
+            </label>
+            <input type="text" name="name" placeholder="如：小明">
+          </div>
+          <div class="form-group">
+            <label>手机尾号4位
+              <span class="hint">有同名同学时填写</span>
+            </label>
+            <input type="text" name="phone_tail" maxlength="4" placeholder="4位数字">
+          </div>
+          <div class="form-group">
+            <label>班级码
+              <span class="hint">演示可留空，自动用 A1B2C3</span>
+            </label>
+            <input type="text" name="class_code" value="A1B2C3" maxlength="6" placeholder="6位字母数字">
+          </div>
+          <button type="submit" class="btn primary block">进入课堂</button>
+        </form>
+        <a href="#" class="back-link" data-link="chooser">返回</a>
+      </div>
+    </section>
+
+    <!-- 3. 教师登录（auth/teacher_login.html） -->
+    <section class="view view-auth" id="v-teacher-login">
+      <h1>教师登录</h1>
+      <div class="form-card">
+        <div class="demo-banner"><span class="hand">演示模式</span><span>登录不连数据库、不做校验——留空也可以，点按钮直接进后台</span></div>
+        <form id="form-teacher-login" autocomplete="off" novalidate>
+          <div class="form-group">
+            <label>用户名
+              <span class="hint">演示可留空</span>
+            </label>
+            <input type="text" name="username" autocomplete="username" placeholder="teacher">
+          </div>
+          <div class="form-group">
+            <label>密码
+              <span class="hint">演示可留空</span>
+            </label>
+            <input type="password" name="password" autocomplete="current-password" placeholder="••••••">
+          </div>
+          <button type="submit" class="btn primary block">进入后台</button>
+        </form>
+        <a href="#" class="back-link" data-link="chooser">返回</a>
+      </div>
+    </section>
+
+    <!-- 4. 课时页（student/lesson.html） -->
+    <section class="view view-lesson" id="v-lesson">
+      <h1 id="lesson-title"></h1>
+      <p class="lesson-desc" id="lesson-desc"></p>
+      <div class="quota-bar" id="quota-bar"></div>
+      <div class="activities" id="activities"></div>
+      <section class="submit-section">
+        <h2>提交我的作品</h2>
+        <form id="form-submit-work" autocomplete="off">
+          <input type="hidden" name="work_type" value="mixed">
+          <div class="form-group">
+            <label>作品名称</label>
+            <input type="text" name="display_name" placeholder="给作品起个名字">
+          </div>
+          <div class="form-group">
+            <label>文字内容</label>
+            <textarea name="content" rows="4" placeholder="写下你的想法、故事、答案..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>上传图片</label>
+            <input type="file" name="image" accept="image/*">
+          </div>
+          <button type="submit" class="btn primary">提交作品</button>
+        </form>
+      </section>
+      <div class="lesson-nav">
+        <a href="#" class="btn" data-link="l7l8l9">L7-L9 编程世界 →</a>
+        <a href="#" class="btn" data-link="l10">L10 作品集 →</a>
+      </div>
+    </section>
+
+    <!-- 5. L7-L9 编程世界（student/l7l8l9.html） -->
+    <section class="view view-l7l8l9" id="v-l7l8l9">
+      <h1>L7-L9 编程世界</h1>
+      <p class="subtitle">编程和运行环境请访问 PSM 平台：</p>
+      <a href="https://psm.steam.fun" target="_blank" rel="noopener" class="external-card">进入 psm.steam.fun →</a>
+      <section class="screenshot-card">
+        <h2>上传编程截图作业</h2>
+        <form id="form-screenshot" autocomplete="off">
+          <input type="hidden" name="work_type" value="screenshot">
+          <div class="form-group">
+            <label>作品说明</label>
+            <textarea name="content" rows="2" placeholder="简单描述你做了什么"></textarea>
+          </div>
+          <div class="form-group">
+            <label>截图</label>
+            <input type="file" name="image" accept="image/png,image/jpeg" required>
+          </div>
+          <button type="submit" class="btn primary block">上传截图</button>
+        </form>
+      </section>
+    </section>
+
+    <!-- 6. 展示墙（student/gallery.html） -->
+    <section class="view view-gallery" id="v-gallery">
+      <h1>班级展示墙</h1>
+      <p class="subtitle">同学们的好作品都在这里</p>
+      <div id="gallery-body"></div>
+    </section>
+
+    <!-- 7. L10 作品集（student/l10_showcase.html） -->
+    <section class="view view-l10" id="v-l10">
+      <h1>L10 作品集</h1>
+      <p class="subtitle">同学们的优秀作品在这里汇聚</p>
+      <div id="l10-body"></div>
+    </section>
+
+    <!-- 8. 教师后台（teacher/dashboard.html） -->
+    <section class="view view-dashboard" id="v-dashboard">
+      <h1>教师后台</h1>
+      <div class="panel">
+        <h2 style="margin-top:0">创建新班级</h2>
+        <form id="form-create-class" autocomplete="off">
+          <div class="form-row">
+            <div class="form-group" style="flex:1">
+              <label>班级名称</label>
+              <input type="text" name="name" required placeholder="如：2026春季·周六上午">
+            </div>
+            <div class="form-group" style="flex:1">
+              <label>学期</label>
+              <input type="text" name="semester" placeholder="如：2026春季">
+            </div>
+            <div class="form-group" style="display:flex;align-items:flex-end">
+              <button type="submit" class="btn primary">创建</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="section">
+        <h2>我的班级</h2>
+        <div id="class-list"></div>
+      </div>
+    </section>
+
+    <!-- 9. 班级管理（teacher/class_detail.html） -->
+    <section class="view view-class" id="v-class">
+      <h1 id="class-title"></h1>
+      <p class="class-info" id="class-info"></p>
+
+      <div class="section">
+        <h2>课次管理</h2>
+        <div class="panel">
+          <form id="form-add-lesson" autocomplete="off">
+            <div class="form-row">
+              <div class="form-group" style="flex:2">
+                <label>课次名称</label>
+                <input type="text" name="name" required placeholder="如：L1-AI是什么">
+              </div>
+              <div class="form-group" style="flex:1">
+                <label>日期</label>
+                <input type="date" name="lesson_date">
+              </div>
+              <div class="form-group" style="flex:1">
+                <label>时段</label>
+                <input type="text" name="time_slot" placeholder="如 14:00-15:30">
+              </div>
+              <div class="form-group" style="display:flex;align-items:flex-end">
+                <button type="submit" class="btn primary">添加课次</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div id="lesson-list"></div>
+      </div>
+
+      <div class="section">
+        <h2>学生名册</h2>
+        <div class="panel">
+          <form id="form-import-students" autocomplete="off">
+            <div class="form-group">
+              <label>批量导入（每行一人：姓名,手机尾号,显示名）</label>
+              <textarea name="student_list" rows="6" placeholder="张三,1234,小张&#10;李四&#10;王五,5678"></textarea>
+            </div>
+            <button type="submit" class="btn primary">导入</button>
+          </form>
+        </div>
+        <div id="student-list"></div>
+      </div>
+    </section>
+
+    <!-- 10. 作品审核（teacher/submissions.html） -->
+    <section class="view view-submissions" id="v-submissions">
+      <h1 id="subs-title">作品审核</h1>
+      <div class="filter-bar">
+        <span class="label">状态</span>
+        <a href="#" class="btn sm" data-sub-filter="all">全部</a>
+        <a href="#" class="btn sm" data-sub-filter="pending">待审核</a>
+        <a href="#" class="btn sm" data-sub-filter="approved">已通过</a>
+        <a href="#" class="btn sm" data-sub-filter="rejected">已驳回</a>
+        <span class="label" style="margin-left:16px">课次</span>
+        <select id="sub-lesson-filter" class="form-group" style="width:auto;flex:0">
+          <option value="all">全部课次</option>
+        </select>
+      </div>
+      <div id="subs-list"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>PSM AI训练营 · psm.steam.fun <span class="hand">·  keep exploring</span></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
